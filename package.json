@@ -1,0 +1,34 @@
+{
+    "version": "0.0.1",
+    "name": "visualcaptcha",
+    "description": "Node.js module for visualCaptcha. Still requires you to have the front-end companion.",
+    "keywords": [
+        "captcha",
+        "visualCaptcha",
+        "security"
+    ],
+    "homepage": "http://visualcaptcha.net",
+    "author": {
+        "name": "Bruno Bernardino",
+        "email": "me@brunobernardino.com"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/emotionLoop/visualCaptcha-npm"
+    },
+    "dependencies": {
+        "mime": "1.2.x",
+        "underscore": "1.5.x",
+        "crypto": "0.0.x"
+    },
+    "devDependencies": {
+        "mocha": "1.15.x",
+        "should": "2.1.x",
+        "supertest": "0.8.x",
+        "sinon": "1.7.x"
+    },
+    "scripts": {
+        "test": "mocha --require should --reporter spec test/unit/*.js"
+    },
+    "license": "MIT"
+}

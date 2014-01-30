@@ -1,0 +1,82 @@
+[
+    {
+        "path": "5times2.mp3",
+        "value": "10"
+    },
+    {
+        "path": "2times10.mp3",
+        "value": "20"
+    },
+    {
+        "path": "5plus1.mp3",
+        "value": "6"
+    },
+    {
+        "path": "4plus1.mp3",
+        "value": "5"
+    },
+    {
+        "path": "4plus3.mp3",
+        "value": "7"
+    },
+    {
+        "path": "6plus6.mp3",
+        "value": "12"
+    },
+    {
+        "path": "12times2.mp3",
+        "value": "24"
+    },
+    {
+        "path": "99plus1.mp3",
+        "value": "100"
+    },
+    {
+        "path": "add3to1.mp3",
+        "value": "4"
+    },
+    {
+        "path": "addblueandyellow.mp3",
+        "value": "green"
+    },
+    {
+        "path": "after2.mp3",
+        "value": "3"
+    },
+    {
+        "path": "divide4by2.mp3",
+        "value": "2"
+    },
+    {
+        "path": "milkcolor.mp3",
+        "value": "white"
+    },
+    {
+        "path": "skycolor.mp3",
+        "value": "blue"
+    },
+    {
+        "path": "sunastar.mp3",
+        "value": "yes"
+    },
+    {
+        "path": "yourobot.mp3",
+        "value": "no"
+    },
+    {
+        "path": "capitaloffrance.mp3",
+        "value": "paris"
+    },
+    {
+        "path": "skynight.mp3",
+        "value": "black"
+    },
+    {
+        "path": "thirdmonth.mp3",
+        "value": "march"
+    },
+    {
+        "path": "firstletteralphabet.mp3",
+        "value": "a"
+    }
+]
