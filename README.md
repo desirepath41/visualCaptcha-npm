@@ -8,7 +8,7 @@ Node.js NPM package for visualCaptcha's backend service
 
 You need Node.js installed with npm.
 ```
-npm install visualCaptcha
+npm install visualcaptcha
 ```
 
 
