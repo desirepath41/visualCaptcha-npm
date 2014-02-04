@@ -88,7 +88,7 @@ describe( 'visualCaptcha', function() {
                 ],
                 obtainedImages;
 
-            visualCaptcha = require( visualCaptchaPath )( sessionMock, imageOptions );
+            visualCaptcha = require( visualCaptchaPath )( sessionMock, false, imageOptions );
 
             obtainedImages = visualCaptcha.getAllImageOptions();
 
@@ -113,7 +113,7 @@ describe( 'visualCaptcha', function() {
                 ],
                 obtainedAudios;
 
-            visualCaptcha = require( visualCaptchaPath )( sessionMock, false, audioOptions );
+            visualCaptcha = require( visualCaptchaPath )( sessionMock, false, false, audioOptions );
 
             obtainedAudios = visualCaptcha.getAllAudioOptions();
 

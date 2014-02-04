@@ -6,6 +6,9 @@ var _ = require( 'underscore' ),
     visualCaptcha;
 
 visualCaptcha = {
+    // Session namespace, used for filtering session data across multiple captchas
+    namespace: 'visualcaptcha',
+
     // Object that will have a reference for the session object
     // It will have .visualCaptcha.images, .visualCaptcha.audios, .visualCaptcha.validImageOption, and .visualCaptcha.validAudioOption
     session: {},
@@ -23,7 +26,7 @@ visualCaptcha = {
     // Generate a new valid option
     // @param numberOfOptions is optional. Defaults to 5
     generate: function( numberOfOptions ) {
-        var visualCaptchaSession = this.session.visualCaptcha,
+        var visualCaptchaSession = this.session[ this.namespace ],
             imageValues = [];
 
         // Avoid the next IF failing if a string with a number is sent
@@ -69,7 +72,7 @@ visualCaptcha = {
 
     // Get data to be used by the frontend
     getFrontendData: function() {
-        var visualCaptchaSession = this.session.visualCaptcha,
+        var visualCaptchaSession = this.session[ this.namespace ],
             frontendData = visualCaptchaSession.frontendData;
 
         return frontendData;
@@ -77,14 +80,14 @@ visualCaptcha = {
 
     // Get the current validImageOption
     getValidImageOption: function() {
-        var visualCaptchaSession = this.session.visualCaptcha;
+        var visualCaptchaSession = this.session[ this.namespace ];
 
         return visualCaptchaSession.validImageOption;
     },
 
     // Get the current validAudioOption
     getValidAudioOption: function() {
-        var visualCaptchaSession = this.session.visualCaptcha;
+        var visualCaptchaSession = this.session[ this.namespace ];
 
         return visualCaptchaSession.validAudioOption;
     },
@@ -101,14 +104,15 @@ visualCaptcha = {
 
     // Return generated image options
     getImageOptions: function() {
-        var generatedImageOptions = this.session.visualCaptcha.images;
+        var generatedImageOptions = this.session[ this.namespace ].images;
 
         return generatedImageOptions;
     },
 
     // Return generated image option at index
     getImageOptionAtIndex: function(index) {
-        var generatedImageOption = this.session.visualCaptcha.images[index];
+        var images = this.getImageOptions(),
+            generatedImageOption = images && images[ index ];
 
         return generatedImageOption;
     },
@@ -127,6 +131,7 @@ visualCaptcha = {
     getAllAudioOptions: function() {
         return this.audioOptions;
     },
+
     getAudio: function( response, fileType ) {
         var fs = require( 'fs' ),
             mime = require( 'mime' ),
@@ -339,7 +344,9 @@ visualCaptcha = {
 // @param session is the default session object
 // @param defaultImages is optional. Defaults to the array inside ./images.json. The path is relative to ./images/
 // @param defaultAudios is optional. Defaults to the array inside ./audios.json. The path is relative to ./audios/
-module.exports = function( session, defaultImages, defaultAudios ) {
+module.exports = function( session, namespace, defaultImages, defaultAudios ) {
+    var captcha = {};
+
     // Throw an error if no session object is passed
     if ( typeof session !== 'object' || ! session ) {
         throw {
@@ -348,11 +355,19 @@ module.exports = function( session, defaultImages, defaultAudios ) {
         };
     }
 
+    // Extend the visualCaptcha object
+    _.extend( captcha, visualCaptcha );
+
+    // If namespace is present, use it
+    if ( namespace && namespace.length !== 0 ) {
+        captcha.namespace = 'visualcaptcha_' + namespace;
+    }
+
     // Attach the session object reference to visualCaptcha
-    visualCaptcha.session = session;
+    captcha.session = session;
 
     // Start a new object that will hold visualCaptcha's data for the session
-    visualCaptcha.session.visualCaptcha = {};
+    captcha.session[ captcha.namespace ] = captcha.session[ captcha.namespace ] || {};
 
     // If there are no defaultImages, get them from ./images.json
     if ( ! defaultImages || defaultImages.length === 0 ) {
@@ -365,10 +380,10 @@ module.exports = function( session, defaultImages, defaultAudios ) {
     }
 
     // Attach the images object reference to visualCaptcha
-    visualCaptcha.imageOptions = defaultImages;
+    captcha.imageOptions = defaultImages;
 
     // Attach the audios object reference to visualCaptcha
-    visualCaptcha.audioOptions = defaultAudios;
+    captcha.audioOptions = defaultAudios;
 
-    return visualCaptcha;
+    return captcha;
 };
