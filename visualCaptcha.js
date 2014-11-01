@@ -132,45 +132,6 @@ visualCaptcha = {
         return this.audioOptions;
     },
 
-    getAudio: function( response, fileType ) {
-        var fs = require( 'fs' ),
-            mime = require( 'mime' ),
-            audioOption = this.getValidAudioOption(),
-            audioFileName = audioOption ? audioOption.path : '',// If there's no audioOption, we set the file name as empty
-            audioFilePath = __dirname + '/audios/' + audioFileName,
-            mimeType,
-            stream;
-
-        // If the file name is empty, we skip any work and return a 404 response
-        if ( audioFileName ) {
-            // We need to replace '.mp3' with '.ogg' if the fileType === 'ogg'
-            if ( fileType === 'ogg' ) {
-                audioFileName = audioFileName.replace( /\.mp3/gi, '.ogg' );
-                audioFilePath = audioFilePath.replace( /\.mp3/gi, '.ogg' );
-            } else {
-                fileType = 'mp3';// This isn't doing anything, really, but I feel better with it
-            }
-
-            if(fs.existsSync( audioFilePath ) ) {
-                mimeType = mime.lookup( audioFilePath );
-
-                // Set the appropriate mime type
-                response.setHeader( 'Content-type', mimeType );
-
-                // Make sure this is not cached
-                response.setHeader( 'Cache-Control', 'no-cache, no-store, must-revalidate' );
-                response.setHeader( 'Pragma', 'no-cache' );
-                response.setHeader( 'Expires', 0 );
-
-                return {error: false, audio: fs.readFileSync(audioFilePath)};
-            } else {
-                return { error: true, errorCode: 404, errorMsg: 'Not Found' };
-            }
-        } else {
-            return { error: true, errorCode: 404, errorMsg: 'Not Found' };
-        }
-    },
-
     // Stream audio file
     // @param response Node's response object
     // @param fileType defaults to 'mp3', can also be 'ogg'
@@ -198,83 +159,40 @@ visualCaptcha = {
                     mimeType = mime.lookup( audioFilePath );
 
                     // Set the appropriate mime type
-                    response.setHeader( 'Content-type', mimeType );
+                    response.set( 'content-type', mimeType );
 
                     // Make sure this is not cached
-                    response.setHeader( 'Cache-Control', 'no-cache, no-store, must-revalidate' );
-                    response.setHeader( 'Pragma', 'no-cache' );
-                    response.setHeader( 'Expires', 0 );
+                    response.set( 'cache-control', 'no-cache, no-store, must-revalidate' );
+                    response.set( 'pragma', 'no-cache' );
+                    response.set( 'expires', 0 );
 
                     stream = fs.createReadStream( audioFilePath )
                         .pipe( response );
 
                     if ( stream ) {
                         stream.on( 'end', function() {
-                            response.send( 200, 'Ok' );
+                            if ( ! response.headerSent ) {
+                                response.status( 200 ).send( 'Ok' );
+                            }
                         });
 
                         stream.on( 'close', function() {
-                            response.send( 200, 'Ok' );
+                            if ( ! response.headerSent ) {
+                                response.status( 200 ).send( 'Ok' );
+                            }
                         });
                     } else {
-                        response.send( 404, 'Not Found' );
+                        response.status( 404 ).send( 'Not Found' );
                     }
                 } else {
-                    response.send( 404, 'Not Found' );
+                    response.status( 404 ).send( 'Not Found' );
                 }
             });
         } else {
-            response.send( 404, 'Not Found' );
+            response.status( 404 ).send( 'Not Found' );
         }
     },
 
-    // Loads a file given an index in the session visualCaptcha images array
-    // @param index of the image in the session images array to send
-    // @param response Node's response object
-    // @paran isRetina boolean. Defaults to false
-    getImage: function( index,  response, isRetina ) {
-        var fs = require( 'fs' ),
-            imageOption = this.getImageOptionAtIndex( index ),
-            imageFileName = imageOption ? imageOption.path : '',// If there's no imageOption, we set the file name as empty
-            imageFilePath = __dirname + '/images/' + imageFileName,
-            mime = require( 'mime' ),
-            mimeType,
-            stream;
-
-        // Force boolean for isRetina
-        if ( ! isRetina ) {
-            isRetina = false;
-        } else {
-            isRetina = true;
-        }
-
-        // If retina is requested, change the file name
-        if ( isRetina ) {
-            imageFileName = imageFileName.replace( /\.png/gi, '@2x.png' );
-            imageFilePath = imageFilePath.replace( /\.png/gi, '@2x.png' );
-        }
-
-        // If the index is non-existent, the file name will be empty, same as if the options weren't generated
-        if ( imageFileName ) {
-            if(fs.existsSync( imageFilePath) ){
-              mimeType = mime.lookup( imageFilePath );
-
-              // Set the appropriate mime type
-              response.setHeader( 'Content-type', mimeType );
-
-              // Make sure this is not cached
-              response.setHeader( 'Cache-Control', 'no-cache, no-store, must-revalidate' );
-              response.setHeader( 'Pragma', 'no-cache' );
-              response.setHeader( 'Expires', 0 );
-
-              return {image: fs.readFileSync(imageFilePath), error: false}
-            } else {
-              return {error: true, errorCode: 404, errorMsg: 'Not Found' };
-            }
-        } else {
-          return {error: true, errorCode: 404, errorMsg: 'Not Found' };
-        }
-    },
     // Stream image file given an index in the session visualCaptcha images array
     // @param index of the image in the session images array to send
     // @param response Node's response object
@@ -308,33 +226,37 @@ visualCaptcha = {
                     mimeType = mime.lookup( imageFilePath );
 
                     // Set the appropriate mime type
-                    response.setHeader( 'Content-type', mimeType );
+                    response.set( 'content-type', mimeType );
 
                     // Make sure this is not cached
-                    response.setHeader( 'Cache-Control', 'no-cache, no-store, must-revalidate' );
-                    response.setHeader( 'Pragma', 'no-cache' );
-                    response.setHeader( 'Expires', 0 );
+                    response.set( 'cache-control', 'no-cache, no-store, must-revalidate' );
+                    response.set( 'pragma', 'no-cache' );
+                    response.set( 'expires', 0 );
 
                     stream = fs.createReadStream( imageFilePath )
                         .pipe( response );
                         
                     if ( stream ) {
                         stream.on( 'end', function() {
-                            response.send( 200, 'Ok' );
+                            if ( ! response.headerSent ) {
+                                response.status( 200 ).send( 'Ok' );
+                            }
                         });
 
                         stream.on( 'close', function() {
-                            response.send( 200, 'Ok' );
+                            if ( ! response.headerSent ) {
+                                response.status( 200 ).send( 'Ok' );
+                            }
                         });
                     } else {
-                        response.send( 404, 'Not Found' );
+                        response.status( 404 ).send( 'Not Found' );
                     }
                 } else {
-                    response.send( 404, 'Not Found' );
+                    response.status( 404 ).send( 'Not Found' );
                 }
             });
         } else {
-            response.send( 404, 'Not Found' );
+            response.status( 404 ).send( 'Not Found' );
         }
 
 

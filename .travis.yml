@@ -4,9 +4,19 @@ node_js:
 branches:
   only:
     - master
+script: npm run-script test-travis
+after_script:
+  - npm install -g coveralls@2
+  - cat ./coverage/lcov.info | coveralls
+  - npm install -g codeclimate-test-reporter
+  - cat ./coverage/lcov.info | codeclimate
 env:
   global:
     - "REPOSITORY=visualcaptcha-npm"
   secure: "KRBDUp2mqR7y12nSUzxaExownlISzSR0O5F1AjckB+G2Yfvox0lbZMBaYKqp/YasuHM8LE7Fcm9HsnUDzZcSYI5GSfMMMCF4QdqbiQ0Y4UVpKAtNhU8BDZltmScommvjK11F9HaGck3+QodJNGoDj+lNDmhgFRHHtt5OY8QFDKU="
 after_success:
-  - "curl --insecure --data 'deploy={\"repository\":\"$REPOSITORY\",\"branch\":\"$TRAVIS_BRANCH\"}' https://githooks.emotionloop.com/?k=$AUTH_KEY"
+  "curl --insecure --data 'deploy={\"repository\":\"$REPOSITORY\",\"branch\":\"$TRAVIS_BRANCH\"}' https://githooks.emotionloop.com/?k=$AUTH_KEY"
+addons:
+  code_climate:
+    repo_token:
+      secure: "IjADYWdPrAZgy/vHxzagUQvt8WNkVkvPACPWCZFn2onZ9F0gS2o+LOi2Fk6RucLHt5WxBEPh10QnNISAy7LJXWJ/hOMkGi99I87LoTKTd7ZFo5+2tP2kPrfGDFBaravu0BBHTur0c9+fnVRDEtsJLbUe3WCB8GPLqQabRkDOYFk="

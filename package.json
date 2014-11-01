@@ -1,5 +1,5 @@
 {
-    "version": "0.0.2",
+    "version": "0.1.0",
     "name": "visualcaptcha",
     "description": "Node.js module for visualCaptcha. Still requires you to have the front-end companion.",
     "keywords": [
@@ -18,17 +18,19 @@
     },
     "dependencies": {
         "mime": "1.2.x",
-        "underscore": "1.5.x",
+        "underscore": "1.7.x",
         "crypto": "0.0.x"
     },
     "devDependencies": {
-        "mocha": "1.15.x",
-        "should": "2.1.x",
-        "supertest": "0.8.x",
-        "sinon": "1.7.x"
+        "mocha": "2.0.x",
+        "should": "4.1.x",
+        "supertest": "0.14.x",
+        "sinon": "1.11.x",
+        "istanbul": "0.3.x"
     },
     "scripts": {
-        "test": "mocha --require should --reporter spec test/unit/*.js"
+        "test": "mocha --require should --reporter spec test/unit/*.js",
+        "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/unit/*.js"
     },
     "license": "MIT"
 }

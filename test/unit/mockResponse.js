@@ -193,6 +193,15 @@ exports.createResponse = function(options) {
         },
 
         /**
+         * Function: set
+         *
+         *   Set a particular header by name.
+         */
+        set: function(name, value) {
+            return _headers[name] = value;
+        },
+
+        /**
          * Function: removeHeader
          *
          *   Removes an HTTP header by name.
