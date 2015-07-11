@@ -1,8 +1,8 @@
-# visualCaptcha-npm
-
 [![Build Status](https://travis-ci.org/emotionLoop/visualCaptcha-npm.png?branch=master)](https://travis-ci.org/emotionLoop/visualCaptcha-npm)
 [![Coverage Status](https://coveralls.io/repos/emotionLoop/visualCaptcha-npm/badge.png)](https://coveralls.io/r/emotionLoop/visualCaptcha-npm)
 [![Code Climate](https://codeclimate.com/github/emotionLoop/visualCaptcha-npm/badges/gpa.svg)](https://codeclimate.com/github/emotionLoop/visualCaptcha-npm)
+
+# visualCaptcha-npm
 
 Node.js NPM package for visualCaptcha's backend service
 
