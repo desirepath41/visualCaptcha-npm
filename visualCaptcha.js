@@ -37,6 +37,11 @@ visualCaptcha = {
             numberOfOptions = 5;
         }
 
+        // Set the minimum numberOfOptions to four
+        if ( numberOfOptions < 4 ) {
+            numberOfOptions = 4;
+        }
+
         // Shuffle all imageOptions
         this.imageOptions = _.shuffle( this.imageOptions );
 
@@ -166,19 +171,37 @@ visualCaptcha = {
                     response.set( 'pragma', 'no-cache' );
                     response.set( 'expires', 0 );
 
-                    stream = fs.createReadStream( audioFilePath )
-                        .pipe( response );
+                    stream = fs.createReadStream( audioFilePath );
+                    var responseData = [];
 
                     if ( stream ) {
+                        stream.on( 'data', function( chunk ) {
+                          responseData.push( chunk );
+                        });
+
                         stream.on( 'end', function() {
                             if ( ! response.headerSent ) {
-                                response.status( 200 ).send( 'Ok' );
+                                var finalData = Buffer.concat( responseData );
+                                response.write( finalData );
+
+                                // Add some noise randomly, so audio files can't be saved and matched easily by filesize or checksum
+                                var noiseData = crypto.randomBytes(Math.round((Math.random() * 1999)) + 501).toString('hex');
+                                response.write( noiseData );
+
+                                response.end();
                             }
                         });
 
                         stream.on( 'close', function() {
                             if ( ! response.headerSent ) {
-                                response.status( 200 ).send( 'Ok' );
+                                var finalData = Buffer.concat( responseData );
+                                response.write( finalData );
+
+                                // Add some noise randomly, so audio files can't be saved and matched easily by filesize or checksum
+                                var noiseData = crypto.randomBytes(Math.round((Math.random() * 1999)) + 501).toString('hex');
+                                response.write( noiseData );
+
+                                response.end();
                             }
                         });
                     } else {
@@ -233,19 +256,37 @@ visualCaptcha = {
                     response.set( 'pragma', 'no-cache' );
                     response.set( 'expires', 0 );
 
-                    stream = fs.createReadStream( imageFilePath )
-                        .pipe( response );
-                        
+                    stream = fs.createReadStream( imageFilePath );
+                    var responseData = [];
+
                     if ( stream ) {
+                        stream.on( 'data', function( chunk ) {
+                          responseData.push( chunk );
+                        });
+
                         stream.on( 'end', function() {
                             if ( ! response.headerSent ) {
-                                response.status( 200 ).send( 'Ok' );
+                                var finalData = Buffer.concat( responseData );
+                                response.write( finalData );
+
+                                // Add some noise randomly, so images can't be saved and matched easily by filesize or checksum
+                                var noiseData = crypto.randomBytes(Math.round((Math.random() * 1999)) + 501).toString('hex');
+                                response.write( noiseData );
+
+                                response.end();
                             }
                         });
 
                         stream.on( 'close', function() {
                             if ( ! response.headerSent ) {
-                                response.status( 200 ).send( 'Ok' );
+                                var finalData = Buffer.concat( responseData );
+                                response.write( finalData );
+
+                                // Add some noise randomly, so images can't be saved and matched easily by filesize or checksum
+                                var noiseData = crypto.randomBytes(Math.round((Math.random() * 1999)) + 501).toString('hex');
+                                response.write( noiseData );
+
+                                response.end();
                             }
                         });
                     } else {

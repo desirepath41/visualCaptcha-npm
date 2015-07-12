@@ -79,3 +79,7 @@ By default, they're populated using the ./audios.json file.
     - `index` is index of the image in the session images array to send;
     - `response` is Node's response object;
     - `isRetina`, boolean, defaults to `false`.
+
+
+## License
+View the [LICENSE](LICENSE) file.

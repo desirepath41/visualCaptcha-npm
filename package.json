@@ -1,5 +1,5 @@
 {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "name": "visualcaptcha",
     "description": "Node.js module for visualCaptcha. Still requires you to have the front-end companion.",
     "keywords": [
