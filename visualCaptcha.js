@@ -191,19 +191,6 @@ visualCaptcha = {
                                 response.end();
                             }
                         });
-
-                        stream.on( 'close', function() {
-                            if ( ! response.headerSent ) {
-                                var finalData = Buffer.concat( responseData );
-                                response.write( finalData );
-
-                                // Add some noise randomly, so audio files can't be saved and matched easily by filesize or checksum
-                                var noiseData = crypto.randomBytes(Math.round((Math.random() * 1999)) + 501).toString('hex');
-                                response.write( noiseData );
-
-                                response.end();
-                            }
-                        });
                     } else {
                         response.status( 404 ).send( 'Not Found' );
                     }
@@ -265,19 +252,6 @@ visualCaptcha = {
                         });
 
                         stream.on( 'end', function() {
-                            if ( ! response.headerSent ) {
-                                var finalData = Buffer.concat( responseData );
-                                response.write( finalData );
-
-                                // Add some noise randomly, so images can't be saved and matched easily by filesize or checksum
-                                var noiseData = crypto.randomBytes(Math.round((Math.random() * 1999)) + 501).toString('hex');
-                                response.write( noiseData );
-
-                                response.end();
-                            }
-                        });
-
-                        stream.on( 'close', function() {
                             if ( ! response.headerSent ) {
                                 var finalData = Buffer.concat( responseData );
                                 response.write( finalData );
