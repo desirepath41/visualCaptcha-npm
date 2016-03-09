@@ -66,10 +66,10 @@ By default, they're populated using the ./audios.json file.
 - `getAllImageOptions: function()` — Return all the image options.
 - `getAllAudioOptions: function()` — Return all the audio options.
 - `getAudio: function( response, fileType )` — Loads a file in the session visualCaptcha audio. Parameters:
-    - `response` is a response object (thought for Express' response, needs `.set()`, `.write()`, `.status()`, `.send()`, and `.end()` functions, and `.headerSent` boolean property);
+    - `response` is a [response object](#response-object);
     - `fileType` is audio filetype, defaults to `'mp3'`, can also be `'ogg'`.
 - `streamAudio: function( response, fileType )` — Stream audio file. Parameters:
-    - `response` is a response object (thought for Express' response, needs `.set()`, `.write()`, `.status()`, `.send()`, and `.end()` functions, and `.headerSent` boolean property);
+    - `response` is a [response object](#response-object);
     - `fileType` is audio filetype, defaults to `'mp3'`, can also be `'ogg'`.
 - `getImage: function( index,  response, isRetina )` — Loads a file given an index in the session visualCaptcha images array. Parameters:
     - `index` is index of the image in the session images array to send;
@@ -77,18 +77,18 @@ By default, they're populated using the ./audios.json file.
     - `isRetina`, boolean, defaults to `false`.
 - `streamImage: function( index, response, isRetina )` — Stream image file given an index in the session visualCaptcha images array. Parameters:
     - `index` is index of the image in the session images array to send;
-    - `response` is a response object (thought for Express' response, needs `.set()`, `.write()`, `.status()`, `.send()`, and `.end()` functions, and `.headerSent` boolean property);
+    - `response` is a [response object](#response-object);
     - `isRetina`, boolean, defaults to `false`.
 
 
 ### response object
-The response object was thought of for Express' response object, so it needs:
-- `.set()`;
-- `.write()`;
-- `.status()`;
-- `.send()`;
-- `.end()`;
-- `.headerSent` (boolean);
+The response object used in `.getAudio()`, `.streamAudio()`, `.getImage()`, and `.streamImage()` was thought of for Express' response object, so it needs:
+- `.set()`
+- `.write()`
+- `.status()`
+- `.send()`
+- `.end()`
+- `.headerSent` (boolean)
 
 ## License
 View the [LICENSE](LICENSE) file.
