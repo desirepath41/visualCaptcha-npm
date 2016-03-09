@@ -65,16 +65,9 @@ By default, they're populated using the ./audios.json file.
 - `getAudioOption: function() ` — Alias for getValidAudioOption.
 - `getAllImageOptions: function()` — Return all the image options.
 - `getAllAudioOptions: function()` — Return all the audio options.
-- `getAudio: function( response, fileType )` — Loads a file in the session visualCaptcha audio. Parameters:
-    - `response` is a [response object](#response-object);
-    - `fileType` is audio filetype, defaults to `'mp3'`, can also be `'ogg'`.
 - `streamAudio: function( response, fileType )` — Stream audio file. Parameters:
     - `response` is a [response object](#response-object);
     - `fileType` is audio filetype, defaults to `'mp3'`, can also be `'ogg'`.
-- `getImage: function( index,  response, isRetina )` — Loads a file given an index in the session visualCaptcha images array. Parameters:
-    - `index` is index of the image in the session images array to send;
-    - `response` is a [response object](#response-object);
-    - `isRetina`, boolean, defaults to `false`.
 - `streamImage: function( index, response, isRetina )` — Stream image file given an index in the session visualCaptcha images array. Parameters:
     - `index` is index of the image in the session images array to send;
     - `response` is a [response object](#response-object);
@@ -82,7 +75,7 @@ By default, they're populated using the ./audios.json file.
 
 
 ### response object
-The response object used in `.getAudio()`, `.streamAudio()`, `.getImage()`, and `.streamImage()` was thought of for Express' response object, so it needs:
+The response object used in `.streamAudio()`, and `.streamImage()` was thought of for Express' response object, so it needs:
 - `.set()`
 - `.write()`
 - `.status()`
