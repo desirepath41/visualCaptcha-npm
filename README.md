@@ -73,13 +73,22 @@ By default, they're populated using the ./audios.json file.
     - `fileType` is audio filetype, defaults to `'mp3'`, can also be `'ogg'`.
 - `getImage: function( index,  response, isRetina )` — Loads a file given an index in the session visualCaptcha images array. Parameters:
     - `index` is index of the image in the session images array to send;
-    - `response` is a response object (thought for Express' response, needs `.set()`, `.write()`, `.status()`, `.send()`, and `.end()` functions, and `.headerSent` boolean property);
+    - `response` is a [response object](#response-object);
     - `isRetina`, boolean, defaults to `false`.
 - `streamImage: function( index, response, isRetina )` — Stream image file given an index in the session visualCaptcha images array. Parameters:
     - `index` is index of the image in the session images array to send;
     - `response` is a response object (thought for Express' response, needs `.set()`, `.write()`, `.status()`, `.send()`, and `.end()` functions, and `.headerSent` boolean property);
     - `isRetina`, boolean, defaults to `false`.
 
+
+### response object
+The response object was thought of for Express' response object, so it needs:
+- `.set()`;
+- `.write()`;
+- `.status()`;
+- `.send()`;
+- `.end()`;
+- `.headerSent` (boolean);
 
 ## License
 View the [LICENSE](LICENSE) file.
