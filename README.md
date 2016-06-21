@@ -55,7 +55,6 @@ By default, they're populated using the ./audios.json file.
 
 - `generate: function( numberOfOptions )` — Generate a new valid visualCaptcha front-end data. `numberOfOptions` — is optional parameter for number of generated images, defaults to `5`.
 - `getFrontendData: function()` — Get data to be used by the frontend.
-- `getFrontendData: function()` — Get data to be used by the frontend.
 - `getValidImageOption: function()` — Get the current validImageOption.
 - `getValidAudioOption: function()` — Get the current validAudioOption.
 - `validateImage: function( sentOption )` — Validate the sent image value with the validImageOption.
