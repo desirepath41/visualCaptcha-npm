@@ -17,9 +17,8 @@
         "url" : "https://github.com/emotionLoop/visualCaptcha-npm"
     },
     "dependencies": {
-        "mime": "1.2.x",
-        "underscore": "1.7.x",
-        "crypto": "0.0.x"
+        "mime": "1.3.x",
+        "underscore": "1.8.x"
     },
     "devDependencies": {
         "mocha": "2.0.x",
