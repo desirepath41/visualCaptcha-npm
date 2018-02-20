@@ -161,7 +161,7 @@ visualCaptcha = {
 
             fs.exists( audioFilePath, function( exists ) {
                 if ( exists ) {
-                    mimeType = mime.lookup( audioFilePath );
+                    mimeType = mime.getType( audioFilePath );
 
                     // Set the appropriate mime type
                     response.set( 'content-type', mimeType );
@@ -233,7 +233,7 @@ visualCaptcha = {
         if ( imageFileName ) {
             fs.exists( imageFilePath, function( exists ) {
                 if ( exists ) {
-                    mimeType = mime.lookup( imageFilePath );
+                    mimeType = mime.getType( imageFilePath );
 
                     // Set the appropriate mime type
                     response.set( 'content-type', mimeType );
